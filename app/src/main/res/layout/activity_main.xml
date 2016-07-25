@@ -29,4 +29,12 @@
         android:textSize="18sp"
         android:id="@+id/tvLongitude"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLongitude"
+        android:text="Altitude"
+        android:textSize="18sp"
+        android:id="@+id/tvAltitude"/>
+
 </RelativeLayout>
