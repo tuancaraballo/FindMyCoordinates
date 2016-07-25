@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,12 +60,40 @@ public class FetchAddressIntentService extends IntentService{
             errorMessage = "Service not available";
             Log.e(TAG,errorMessage,ioExcpetion);
         }catch (IllegalArgumentException illegalArgumentException){
-            //-->catches invalid latitdue or longitude values
+            //-->catches invalid latitude or longitude values
+            errorMessage = "Invalid latitude or longitude";
+            Log.e(TAG,errorMessage,illegalArgumentException);
         }
 
+        // 6 --> Check if address was not found
+        if(addresses == null || addresses.size() ==0 ){
+            if(errorMessage.isEmpty()){
+                errorMessage == "Sorry, no address was found";
+                Log.e(TAG,errorMessage);
+            }
+            deliverResultToReceiver(Constants.FAILURE_RESULT,errorMessage);
+        }else{  //--> the address was found
+            Address address = addresses.get(0);
+            ArrayList<String> addressElements = new ArrayList<~>();
 
+            // --> iterate through each element in the addrs object and append it
+            // to the ArrayList
+            for (int i = 0; i<address.getMaxAddressLineIndex(); i++){
+                addressElements.add(address.getAddressLine(i));
+            }
+            Log.i(TAG,"Address was found");
+
+            // -->Check out how cool the TxtUtils function is, read more about it
+            // later
+            deliverResultToReceiver(Constants.SUCCESS_RESULT,
+                    TextUtils.join(System.getProperty("line.separator"),
+                            addressElements));
+        }
     }
 
-    private void deliverResultToReceiver(int resultCodet, String errorMessage) {
+    private void deliverResultToReceiver(int resultCode, String message) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.RESULT_DATA_KEY, message);
+        mReceiver.send(resultCode,bundle);
     }
 }
