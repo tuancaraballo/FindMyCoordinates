@@ -56,6 +56,7 @@ public class FetchAddressIntentService extends IntentService{
         try{
             addresses = geocoder.getFromLocation(location.getLatitude(),
                     location.getLongitude(),1);
+            Log.v(TAG, "JUST GOT THE ADDRESS!!!!");
         }catch (IOException ioExcpetion){ //-->catch network or other I/O problems
             errorMessage = "Service not available";
             Log.e(TAG,errorMessage,ioExcpetion);
@@ -66,19 +67,19 @@ public class FetchAddressIntentService extends IntentService{
         }
 
         // 6 --> Check if address was not found
-        if(addresses == null || addresses.size() ==0 ){
+        if(addresses == null || addresses.size() == 0){
             if(errorMessage.isEmpty()){
-                errorMessage == "Sorry, no address was found";
+                errorMessage = "Sorry, no address was found";
                 Log.e(TAG,errorMessage);
             }
             deliverResultToReceiver(Constants.FAILURE_RESULT,errorMessage);
         }else{  //--> the address was found
             Address address = addresses.get(0);
-            ArrayList<String> addressElements = new ArrayList<~>();
+            ArrayList<String> addressElements = new ArrayList<String>();
 
             // --> iterate through each element in the addrs object and append it
             // to the ArrayList
-            for (int i = 0; i<address.getMaxAddressLineIndex(); i++){
+            for (int i = 0; i < address.getMaxAddressLineIndex(); i++){
                 addressElements.add(address.getAddressLine(i));
             }
             Log.i(TAG,"Address was found");
@@ -94,6 +95,8 @@ public class FetchAddressIntentService extends IntentService{
     private void deliverResultToReceiver(int resultCode, String message) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
+        Log.v(TAG,"ITS ON DELIVER_RESULT_TO_RECEIVER!!");
+        Log.v(TAG, "THE ADDRESS IS: " + message);
         mReceiver.send(resultCode,bundle);
     }
 }
