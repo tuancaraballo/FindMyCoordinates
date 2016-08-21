@@ -22,6 +22,8 @@ public class FetchAddressIntentService extends IntentService{
 
 
     private static final String TAG = "FetchAddressIS";
+
+
     protected ResultReceiver mReceiver; // --> receiver sent by the user as an extra in the intent
 
     public FetchAddressIntentService() { //-->Constructor
@@ -34,12 +36,17 @@ public class FetchAddressIntentService extends IntentService{
         // 1 --> Gets receiver from intent that was passed from MainActivity as an extra
         mReceiver = intent.getParcelableExtra(Constants.RECEIVER);
 
+
         if(mReceiver == null){ //--> some error checking
             Log.wtf(TAG,"No Receiver was passed");
             return;
         }
         // 2 --> Location that was passed to this activity from MainActivity as an extra
         Location location = intent.getParcelableExtra(Constants.LOCATION_DATA_EXTRA);
+
+
+
+
 
         if(location == null){ // --> some error checking
             errorMessage = "No location was provided";
