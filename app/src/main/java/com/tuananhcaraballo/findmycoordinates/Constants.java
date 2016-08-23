@@ -15,5 +15,11 @@ public class Constants {
     public  static  final  String LOCATION_DATA_EXTRA = PACKAGE_NAME + ".LOCATION_DATA_EXTRA";
     public static final String LATITUDE = "LATITUDE";
     public static final String LONGITUDE = "LONGITUDE";
+    public static final String RECEIVER_WEATHER = PACKAGE_NAME + ".RECEIVER_WEATHER";
+    public static final String MAX_TEMP = "MAXIMUM_TEMPERATURE";
+    public static final String MIN_TEMP = "MINIMUM_TEMPERATURE";
+    public static final String WEATHER_DESCRIPTION = "WEATHER_DESCRIPTION";
+    public static final int KELVIN_CONSTANT = 273;
+
 
 }
