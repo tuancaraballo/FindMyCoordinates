@@ -18,8 +18,9 @@ public class Constants {
     public static final String RECEIVER_WEATHER = PACKAGE_NAME + ".RECEIVER_WEATHER";
     public static final String MAX_TEMP = "MAXIMUM_TEMPERATURE";
     public static final String MIN_TEMP = "MINIMUM_TEMPERATURE";
+    public static final String AVERAGE_TEMP = "MINIMUM_TEMPERATURE";
     public static final String WEATHER_DESCRIPTION = "WEATHER_DESCRIPTION";
-    public static final int KELVIN_CONSTANT = 273;
+    public static final Double KELVIN_CONSTANT = 273.15;
 
 
 }
