@@ -21,6 +21,6 @@ public class Constants {
     public static final String AVERAGE_TEMP = "MINIMUM_TEMPERATURE";
     public static final String WEATHER_DESCRIPTION = "WEATHER_DESCRIPTION";
     public static final Double KELVIN_CONSTANT = 273.15;
-
+    public static final String WEATHER_ICON = "WEATHER_ICON";
 
 }

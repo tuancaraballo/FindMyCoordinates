@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
@@ -44,7 +46,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private TextView altitudeText;
     private TextView addressText;
 
-    private TextView latitude_longitude;  //---> used for the new way to get latitude and longitude in the intentService
+    private TextView average_temperature;
+    private TextView min_temperature;
+    private TextView max_temperature;
+    private TextView weather_description;
+    private ImageView weather_icon;
+
+
+   // private TextView latitude_longitude;  //---> used for the new way to get latitude and longitude in the intentService
     private Button fetchButton;
     private Button switchMap;
     private MapFragment mapFragment;
@@ -126,8 +135,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         switchMap = (Button) findViewById(R.id.switchMap);
-        latitude_longitude = (TextView) findViewById(R.id.new_Lat_Long);
+        //latitude_longitude = (TextView) findViewById(R.id.new_Lat_Long);
         mapProgress_bar = (ProgressBar) findViewById(R.id.mapprogress_bar);
+
+        weather_icon = (ImageView) findViewById(R.id.weather_icon);
+        weather_description = (TextView) findViewById(R.id.weather_description);
+        average_temperature = (TextView) findViewById(R.id.ave_temp);
+        min_temperature = (TextView) findViewById(R.id.min_temp);
+        max_temperature = (TextView) findViewById(R.id.max_temp);
+
+
 
         //-- required variables for reverse GeoLocation:
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -483,16 +500,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             Log.wtf(TAG, "Got to Weather Result receiver on WeatherResultReceiver");
-
+            String Description = resultData.getString(Constants.WEATHER_DESCRIPTION);
             if(resultCode == Constants.SUCCESS_RESULT){
                 int Max_Temp = resultData.getInt(Constants.MAX_TEMP);
                 int Min_Temp = resultData.getInt(Constants.MIN_TEMP);
                 int Average_Temp = resultData.getInt(Constants.AVERAGE_TEMP);
+                String Weather_Icon = resultData.getString(Constants.WEATHER_ICON);
                 Log.wtf(TAG, "Min_Temp: "+ Min_Temp);
                 Log.wtf(TAG, "Max_Temp: "+ Max_Temp);
                 Log.wtf(TAG, "Ave_Temp: "+ Average_Temp);
+                Log.wtf(TAG, "Weather_Icon: "+ Weather_Icon);
+
+                average_temperature.setText(String.valueOf(Average_Temp));
+                min_temperature.setText(String.valueOf(Min_Temp));
+                max_temperature.setText(String.valueOf(Max_Temp));
+                weather_description.setText(Description);
+
+                String IconHTTPURL = "http://openweathermap.org/img/w/"+Weather_Icon+".png";
+                Picasso.with(getBaseContext()).load(IconHTTPURL).into(weather_icon);
+
+
             }
-            String Description = resultData.getString(Constants.WEATHER_DESCRIPTION);
+
             Log.wtf(TAG, "Description: "+ Description);
 
             // update the MapUI
