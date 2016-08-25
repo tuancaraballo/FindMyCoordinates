@@ -1,5 +1,6 @@
 package com.tuananhcaraballo.Pyxis;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private void setMapFragment() {
+        Log.wtf(TAG,"SET MAP FRAGMENT");
         mapFragment.getMapAsync(this);
     }
 
@@ -429,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     // NOTE: this is the callback function that gets called when the method is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.v("----> onMapReady()","MAP IS READY");
+        Log.wtf("----> onMapReady()","MAP IS READY");
         myGoogleMap = googleMap;
         isMapRequested = false;
         updateMapUI(2);
@@ -449,6 +451,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
 
+    @SuppressLint("ParcelCreator")
     class AddressResultReceiver extends ResultReceiver{
         public AddressResultReceiver(Handler handler){
             super(handler);
@@ -470,6 +473,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
 
+    @SuppressLint("ParcelCreator")
     class WeatherResultReceiver extends  ResultReceiver{
 
         public WeatherResultReceiver(Handler handler) {
