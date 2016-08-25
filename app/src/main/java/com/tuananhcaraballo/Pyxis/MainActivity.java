@@ -36,6 +36,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
+
+    // note to check pushing commits
     private TextView latitudeText;
     private TextView longitudeText;
     private TextView altitudeText;
